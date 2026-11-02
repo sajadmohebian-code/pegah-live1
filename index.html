@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#10285a">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<title>پگاه زنده</title>
+<style>
+:root{
+  --bg:#f1f4f9; --card:#fff; --text:#1c2433; --muted:#6a7488; --line:#dde3ee; --navy:#10285a; --blue:#1f5fd6;
+  --green:#1e9e55; --green-bg:#e4f5ec; --red:#d6362e; --red-bg:#fdeceb; --gray:#8b93a5; --gray-bg:#eceff4;
+}
+@media (prefers-color-scheme: dark){
+  :root{ --bg:#0e1320; --card:#171e2e; --text:#e8ecf5; --muted:#9aa4ba; --line:#2a3348; --navy:#a9c0ff; --blue:#6a9bff;
+    --green:#3ccf7a; --green-bg:#123020; --red:#ff6a60; --red-bg:#3a1b19; --gray:#7d869b; --gray-bg:#232b3d; }
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--text);font-family:Tahoma,"Segoe UI",Roboto,Arial,sans-serif;font-size:15px}
+.wrap{max-width:620px;margin:0 auto;padding:0 12px calc(24px + env(safe-area-inset-bottom))}
+.top{position:sticky;top:0;z-index:5;background:var(--card);border-bottom:1px solid var(--line);
+  padding:calc(10px + env(safe-area-inset-top)) 14px 10px;display:flex;align-items:center;gap:10px}
+.top h1{font-size:16px;margin:0;color:var(--navy);flex:1}
+.ibtn{border:1px solid var(--line);background:var(--bg);color:var(--text);border-radius:10px;min-width:40px;height:40px;font-size:18px;font-family:inherit}
+.chip{display:inline-flex;gap:6px;align-items:center;padding:3px 10px;border-radius:99px;font-size:12px;background:var(--gray-bg);color:var(--muted)}
+.chip.ok{background:var(--green-bg);color:var(--green)} .chip.bad{background:var(--red-bg);color:var(--red)}
+.dot{width:9px;height:9px;border-radius:50%;background:currentColor;display:inline-block}
+.sum{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0}
+.sum div{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 6px;text-align:center}
+.sum b{display:block;font-size:26px;line-height:1.2} .sum span{font-size:11px;color:var(--muted)}
+.sum .g b{color:var(--green)} .sum .r b{color:var(--red)} .sum .x b{color:var(--gray)}
+.sum .sel{outline:2px solid var(--blue)}
+.banner{background:var(--red-bg);color:var(--red);border:1px solid var(--red);border-radius:10px;padding:9px 12px;margin:10px 0;font-size:13px;display:none;white-space:pre-line}
+.m{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin:8px 0;border-right:7px solid var(--gray)}
+.m.g{border-right-color:var(--green)} .m.r{border-right-color:var(--red)}
+.m .row{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.m .n{font-weight:bold;font-size:15px}
+.st{font-size:12px;padding:2px 10px;border-radius:99px;background:var(--gray-bg);color:var(--gray);white-space:nowrap}
+.g .st{background:var(--green-bg);color:var(--green)} .r .st{background:var(--red-bg);color:var(--red)}
+.sub{color:var(--muted);font-size:12px;margin-top:5px}
+.stale .m{opacity:.55}
+.bar{display:flex;height:9px;border-radius:5px;overflow:hidden;background:var(--gray-bg);margin:8px 0 3px}
+.bar i{display:block}.bar .g{background:var(--green)}.bar .r{background:var(--red)}.bar .x{background:var(--gray)}
+svg{display:block;width:100%;height:auto}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;margin:10px 0}
+.panel h2{margin:0 0 8px;font-size:14px;color:var(--navy)}
+.big{text-align:center;padding:18px 10px;border-radius:14px;margin:10px 0}
+.big.g{background:var(--green-bg);color:var(--green)} .big.r{background:var(--red-bg);color:var(--red)} .big.x{background:var(--gray-bg);color:var(--gray)}
+.big b{display:block;font-size:26px} .big span{font-size:13px}
+.pin{display:flex;justify-content:space-between;gap:8px;padding:5px 0;border-bottom:1px dashed var(--line);font-size:12px;color:var(--muted)}
+.pin:last-child{border:0}
+.axis text{fill:var(--muted);font-size:10px}
+.login{max-width:380px;margin:12vh auto 0;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px}
+.login h1{text-align:center;color:var(--navy);font-size:19px;margin:0 0 4px}
+.login p{text-align:center;color:var(--muted);font-size:12px;margin:0 0 14px}
+.login input[type=text],.login input[type=password]{width:100%;padding:13px;margin:6px 0;border:1px solid var(--line);border-radius:10px;
+  background:var(--bg);color:var(--text);font-size:16px;font-family:inherit;direction:ltr;text-align:left}
+.login button{width:100%;padding:13px;margin-top:10px;border:0;border-radius:10px;background:var(--blue);color:#fff;font-size:16px;font-family:inherit}
+.login label{font-size:13px;color:var(--muted);display:block;margin-top:8px}
+.err{color:var(--red);font-size:13px;margin-top:10px;text-align:center;min-height:18px}
+.hide{display:none!important}
+.foot{color:var(--muted);font-size:11px;text-align:center;margin-top:14px}
+</style>
+</head>
+<body>
+
+<div id="v_login" class="wrap hide">
+  <div class="login">
+    <h1>🏭 پگاه لرستان</h1>
+    <p>وضعیت زنده‌ی دستگاه‌ها</p>
+    <input id="u" type="text" placeholder="نام کاربری" autocomplete="username" autocapitalize="off" autocorrect="off" spellcheck="false">
+    <input id="p" type="password" placeholder="رمز عبور" autocomplete="current-password">
+    <label><input id="rem" type="checkbox" checked> مرا در این گوشی به خاطر بسپار</label>
+    <button id="go">ورود</button>
+    <div class="err" id="err"></div>
+  </div>
+</div>
+
+<div id="v_app" class="hide">
+  <div class="top">
+    <button class="ibtn hide" id="back" aria-label="بازگشت">➜</button>
+    <h1 id="title">وضعیت زنده‌ی دستگاه‌ها</h1>
+    <span class="chip" id="chip"><i class="dot"></i><span id="chipt">...</span></span>
+    <button class="ibtn" id="menu" aria-label="خروج">⏻</button>
+  </div>
+  <div class="wrap">
+    <div class="banner" id="banner"></div>
+    <div id="list">
+      <div class="sum" id="sum"></div>
+      <div id="cards"></div>
+    </div>
+    <div id="detail" class="hide"></div>
+    <div class="foot" id="foot"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+"use strict";
+/* آدرس پروژه و کلید عمومی (publishable): محرمانه نیستند و برای همین کار طراحی شده‌اند.
+   رمز حساب همگام‌سازی هرگز در این برنامه نیست؛ ورود فقط با نام‌کاربری/رمز تعریف‌شده توسط ادمین است. */
+var SUPABASE_URL="https://esttnirutqpzqkvpjmlw.supabase.co";
+var SUPABASE_KEY="sb_publishable_959Nul-EFW5laUtXTMGQZQ_LiNQUCXx";
+var REFRESH_MS=20000, LS="pegah_live_login";
+
+var cred=null, who=null, rec=null, filter="all", view="list", timer=null, busy=false, lastErr="";
+function $(i){return document.getElementById(i)}
+function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+function fa(n){return String(n).replace(/\d/g,function(d){return "۰۱۲۳۴۵۶۷۸۹"[d]})}
+function pad(n){return (n<10?"0":"")+n}
+function ts(s){return Date.parse(s)/1000}
+function clk(s){return fa(s.slice(11,16))}
+function fmtDur(sec){sec=Math.max(0,Math.round(sec));var h=Math.floor(sec/3600),m=Math.floor(sec%3600/60);
+  if(h>=24)return fa(Math.floor(h/24))+" روز و "+fa(h%24)+" ساعت";
+  if(h>0)return fa(h)+" ساعت و "+fa(m)+" دقیقه"; if(m>0)return fa(m)+" دقیقه"; return fa(sec)+" ثانیه"}
+function fmtMin(sec){var m=Math.round(sec/60);return m>=60?fa(Math.floor(m/60))+":"+fa(pad(m%60)):fa(m)+" دقیقه"}
+function cls(s){return s===1?"g":(s===0?"r":"x")}
+function txt(s){return s===1?"در حال کار":(s===0?"متوقف":"نامشخص")}
+var COL={"1":"var(--green)","0":"var(--red)","-1":"var(--gray)"};
+
+function getSaved(){try{return JSON.parse(localStorage.getItem(LS)||"null")}catch(e){return null}}
+function setSaved(c){try{if(c)localStorage.setItem(LS,JSON.stringify(c));else localStorage.removeItem(LS)}catch(e){}}
+
+/* ------------------------------------------------------------ ارتباط با ابر */
+async function call(){
+  var h={"apikey":SUPABASE_KEY,"Content-Type":"application/json"};
+  if(SUPABASE_KEY.indexOf("sb_")!==0) h["Authorization"]="Bearer "+SUPABASE_KEY;   // کلیدهای قدیمی JWT
+  var r=await fetch(SUPABASE_URL+"/rest/v1/rpc/live_login",{method:"POST",headers:h,body:JSON.stringify({p_user:cred.u,p_pass:cred.p})});
+  if(!r.ok){
+    var t="";try{t=await r.text()}catch(e){}
+    if(/PGRST202|Could not find the function/i.test(t)) throw new Error("تابع ورود در ابر ساخته نشده است (فایل SQL را اجرا کنید).");
+    throw new Error("خطای سرور ("+r.status+")");
+  }
+  return r.json();
+}
+async function refresh(){
+  if(busy||!cred) return; busy=true;
+  try{
+    var d=await call();
+    if(!d.ok){
+      var m={invalid:"نام کاربری یا رمز اشتباه است.",locked:"به‌دلیل چند بار ورود ناموفق، چند دقیقه صبر کنید.",
+             no_users:"فهرست کاربران هنوز به ابر نرسیده است.",bad_input:"ورودی نامعتبر است."}[d.error]||"ورود ناموفق.";
+      stopTimer(); setSaved(null); cred=null; showLogin(m); return;
+    }
+    who={name:d.name,role:d.role}; lastErr="";
+    rec={live:d.live,mtime:d.client_mtime,server:d.server_time,got:Date.now()/1000};
+    $("banner").style.display="none"; render();
+  }catch(e){
+    var msg=(e&&e.message)||String(e);
+    if(/Failed to fetch|NetworkError|Load failed/i.test(msg)) msg="اینترنت گوشی قطع است.";
+    lastErr=msg; showBanner("⚠ "+msg+(rec?"\nآخرین داده‌ی دریافتی نمایش داده می‌شود.":""));
+  }finally{busy=false}
+}
+function startTimer(){stopTimer();timer=setInterval(function(){if(!document.hidden)refresh()},REFRESH_MS)}
+function stopTimer(){if(timer){clearInterval(timer);timer=null}}
+document.addEventListener("visibilitychange",function(){if(!document.hidden&&cred)refresh()});
+
+/* ------------------------------------------------------------ نمودارها */
+function strip(tl,nowS,hours,h){
+  var W=600,t1=nowS,t0=nowS-hours*3600,o='<svg viewBox="0 0 '+W+' '+h+'" preserveAspectRatio="none" style="height:'+h+'px;border-radius:6px">';
+  for(var i=0;i<tl.length;i++){var a=Math.max(t0,ts(tl[i][0])),b=i+1<tl.length?ts(tl[i+1][0]):t1;if(b<=a)continue;
+    o+='<rect x="'+((a-t0)/(t1-t0)*W).toFixed(1)+'" y="0" width="'+Math.max(.8,(b-a)/(t1-t0)*W).toFixed(1)+'" height="'+h+'" fill="'+COL[tl[i][1]]+'"/>'}
+  return o+'</svg>';
+}
+function hourAxis(nowS,hours){
+  var W=600,o='<svg viewBox="0 0 '+W+' 16" class="axis">';
+  for(var h=hours;h>=0;h-=4){var t=nowS-h*3600,x=W-(h/hours)*W; if(h===0)x=W-10; if(h===hours)x=12;
+    o+='<text x="'+x+'" y="12" text-anchor="middle">'+fa(pad(new Date(t*1000).getHours())+":00")+'</text>'}
+  return o+'</svg>';
+}
+function stepChart(tl,nowS,hours){
+  var W=600,H=120,L=4,R=4,t0=nowS-hours*3600,x=function(t){return L+(W-L-R)*(t-t0)/(nowS-t0)},yv={"1":18,"0":96},o='<svg viewBox="0 0 '+W+' '+H+'" class="axis">';
+  o+='<line x1="0" x2="'+W+'" y1="18" y2="18" stroke="var(--line)"/><line x1="0" x2="'+W+'" y1="96" y2="96" stroke="var(--line)"/>';
+  o+='<text x="'+(W-4)+'" y="12" text-anchor="end">کار</text><text x="'+(W-4)+'" y="112" text-anchor="end">توقف</text>';
+  for(var i=0;i<tl.length;i++){
+    var a=Math.max(t0,ts(tl[i][0])),b=i+1<tl.length?ts(tl[i+1][0]):nowS; if(b<=a)continue;
+    var s=tl[i][1];
+    if(s===-1){o+='<rect x="'+x(a).toFixed(1)+'" y="18" width="'+Math.max(.8,x(b)-x(a)).toFixed(1)+'" height="78" fill="var(--gray)" opacity=".18"/>';continue}
+    o+='<line x1="'+x(a).toFixed(1)+'" x2="'+x(b).toFixed(1)+'" y1="'+yv[s]+'" y2="'+yv[s]+'" stroke="'+COL[s]+'" stroke-width="3" stroke-linecap="round"/>';
+    if(i+1<tl.length&&tl[i+1][1]!==-1&&s!==-1) o+='<line x1="'+x(b).toFixed(1)+'" x2="'+x(b).toFixed(1)+'" y1="'+yv[s]+'" y2="'+yv[tl[i+1][1]]+'" stroke="var(--muted)" stroke-width="1.2" opacity=".6"/>';
+  }
+  return o+'</svg>';
+}
+
+/* ------------------------------------------------------------ نمایش */
+function showBanner(t){var b=$("banner");b.textContent=t;b.style.display="block"}
+function render(){
+  if(!rec||!rec.live){showBanner("هنوز وضعیتی از سیستم پل به ابر نرسیده است.");$("cards").innerHTML="";$("sum").innerHTML="";return}
+  var p=rec.live, nowS=ts(p.now), age=(rec.server||rec.got)-(rec.mtime||0), stale=age>120;
+  var chip=$("chip");chip.className="chip "+(stale?"bad":"ok");$("chipt").textContent=stale?("قطع — "+fmtDur(age)+" پیش"):"زنده";
+  document.body.className=stale?"stale":"";
+  var msgs=[];
+  if(stale)msgs.push("⚠ سیستم پل داده‌ی تازه نمی‌فرستد؛ وضعیت‌ها مربوط به "+fmtDur(age)+" پیش است.");
+  if(p.log_found===false)msgs.push("⚠ فایل سیگنال روی سیستم پل پیدا نشد.");
+  if((p.boards_down||[]).length)msgs.push("⚠ ارتباط با تابلو قطع: "+p.boards_down.join("، "));
+  if(msgs.length)showBanner(msgs.join("\n"));else $("banner").style.display="none";
+  var ms=p.machines||[];
+  if(view==="list") renderList(p,ms,nowS,age,stale); else renderDetail(p,ms,nowS,age,stale);
+  $("foot").textContent=(who?who.name+" · ":"")+"آخرین رکورد سیگنال: "+(p.last_record?fa(p.last_record.replace("T"," ")):"—");
+}
+function renderList(p,ms,nowS,age,stale){
+  var c=p.counts||{running:0,stopped:0,unknown:0};
+  var mk=function(k,cl,n,l){return '<div class="'+cl+(String(filter)===k?" sel":"")+'" data-f="'+k+'"><b>'+fa(n)+'</b><span>'+l+'</span></div>'};
+  $("sum").innerHTML=mk("1","g",c.running,"🟢 در حال کار")+mk("0","r",c.stopped,"🔴 متوقف")+mk("-1","x",c.unknown,"⚪ نامشخص");
+  var list=ms.filter(function(m){return filter==="all"||String(m.state)===String(filter)})
+    .sort(function(a,b){var o={"0":0,"-1":1,"1":2};return (o[a.state]-o[b.state])||a.name.localeCompare(b.name,"fa")});
+  $("cards").innerHTML=list.map(function(m){
+    var a=m.today,tot=a.run+a.stop+a.unk||1;
+    var since=m.since?("از "+clk(m.since)+" · "+fmtDur(nowS-ts(m.since)+(stale?0:Math.max(0,age)))):"بدون تغییر اخیر";
+    return '<div class="m '+cls(m.state)+'" data-n="'+esc(m.name)+'"><div class="row"><span class="n">'+esc(m.name)+'</span><span class="st">'+txt(m.state)+'</span></div>'
+      +'<div class="sub">'+since+'</div>'+strip(m.timeline,nowS,p.timeline_hours||24,14)
+      +'<div class="bar"><i class="g" style="width:'+(a.run/tot*100).toFixed(1)+'%"></i><i class="r" style="width:'+(a.stop/tot*100).toFixed(1)+'%"></i><i class="x" style="width:'+(a.unk/tot*100).toFixed(1)+'%"></i></div>'
+      +'<div class="sub" style="display:flex;justify-content:space-between"><span>امروز: کار '+fmtMin(a.run)+'</span><span>توقف '+fmtMin(a.stop)+'</span></div></div>';
+  }).join("")||'<div class="sub" style="text-align:center;padding:20px">دستگاهی با این فیلتر نیست.</div>';
+}
+function renderDetail(p,ms,nowS,age,stale){
+  var m=ms.filter(function(x){return x.name===view})[0];
+  if(!m){$("detail").innerHTML='<div class="panel">این دستگاه پیدا نشد.</div>';return}
+  var a=m.today,tot=a.run+a.stop+a.unk||1,hrs=p.timeline_hours||24;
+  var since=m.since?("از ساعت "+clk(m.since)+" — "+fmtDur(nowS-ts(m.since)+(stale?0:Math.max(0,age)))):"بدون تغییر در ۴۸ ساعت اخیر";
+  $("detail").innerHTML=
+    '<div class="big '+cls(m.state)+'"><b>'+(m.state===1?"🟢 ":m.state===0?"🔴 ":"⚪ ")+txt(m.state)+'</b><span>'+since+'</span></div>'
+   +'<div class="panel"><h2>نمودار آنلاین '+fa(hrs)+' ساعت گذشته</h2>'+stepChart(m.timeline,nowS,hrs)+strip(m.timeline,nowS,hrs,26)+hourAxis(nowS,hrs)+'</div>'
+   +'<div class="panel"><h2>امروز (از ساعت ۰۰:۰۰)</h2>'
+   +'<div class="bar" style="height:14px"><i class="g" style="width:'+(a.run/tot*100).toFixed(1)+'%"></i><i class="r" style="width:'+(a.stop/tot*100).toFixed(1)+'%"></i><i class="x" style="width:'+(a.unk/tot*100).toFixed(1)+'%"></i></div>'
+   +'<div class="pin"><span>🟢 کارکرد</span><span>'+fmtMin(a.run)+' ('+fa(Math.round(a.run/tot*100))+'٪)</span></div>'
+   +'<div class="pin"><span>🔴 توقف</span><span>'+fmtMin(a.stop)+' ('+fa(Math.round(a.stop/tot*100))+'٪)</span></div>'
+   +'<div class="pin"><span>⚪ نامشخص / قطع ارتباط</span><span>'+fmtMin(a.unk)+'</span></div></div>'
+   +'<div class="panel"><h2>ورودی‌های تابلو</h2>'+m.pins.map(function(q){
+      return '<div class="pin"><span>'+esc(q.code||"")+" "+esc(q.dname||"")+(q.side?" ("+esc(q.side)+")":"")+'</span><span>'
+        +(q.link?"":"⛔ قطع · ")+(q.val===null?"؟":(q.val?"۱":"۰"))+' · پین '+fa(q.pin)+'</span></div>'}).join("")+'</div>';
+}
+function setView(v,push){
+  view=v;
+  $("list").classList.toggle("hide",v!=="list");$("detail").classList.toggle("hide",v==="list");
+  $("back").classList.toggle("hide",v==="list");$("title").textContent=v==="list"?"وضعیت زنده‌ی دستگاه‌ها":v;
+  if(push){try{history.pushState({v:v},"",v==="list"?"#":"#m="+encodeURIComponent(v))}catch(e){}}
+  window.scrollTo(0,0); render();
+}
+window.addEventListener("popstate",function(){
+  var h=location.hash; setView(/^#m=/.test(h)?decodeURIComponent(h.slice(3)):"list",false);
+});
+document.addEventListener("click",function(ev){
+  var e=ev.target, s=e.closest&&e.closest(".sum [data-f]"), m=e.closest&&e.closest(".m[data-n]");
+  if(s){filter=s.getAttribute("data-f")===String(filter)?"all":s.getAttribute("data-f");render();return}
+  if(m){setView(m.getAttribute("data-n"),true)}
+});
+$("back").onclick=function(){if(history.length>1&&/^#m=/.test(location.hash))history.back();else setView("list",false)};
+$("menu").onclick=function(){if(confirm("از برنامه خارج می‌شوید؟")){stopTimer();setSaved(null);cred=null;rec=null;who=null;showLogin("")}};
+
+function showLogin(msg){
+  $("v_app").classList.add("hide");$("v_login").classList.remove("hide");$("err").textContent=msg||"";
+  $("p").value="";
+}
+function showApp(){$("v_login").classList.add("hide");$("v_app").classList.remove("hide");
+  var h=location.hash; view=/^#m=/.test(h)?decodeURIComponent(h.slice(3)):"list"; setView(view,false); refresh(); startTimer()}
+async function doLogin(){
+  var u=$("u").value.trim(),p=$("p").value;
+  if(!u||!p){$("err").textContent="نام کاربری و رمز را وارد کنید.";return}
+  cred={u:u,p:p};$("err").textContent="در حال ورود...";
+  try{
+    var d=await call();
+    if(!d.ok){var m={invalid:"نام کاربری یا رمز اشتباه است.",locked:"چند بار ورود ناموفق؛ چند دقیقه صبر کنید.",no_users:"فهرست کاربران هنوز به ابر نرسیده است."}[d.error]||"ورود ناموفق.";cred=null;$("err").textContent=m;return}
+    if($("rem").checked)setSaved(cred);
+    who={name:d.name,role:d.role};rec={live:d.live,mtime:d.client_mtime,server:d.server_time,got:Date.now()/1000};
+    showApp();
+  }catch(e){cred=null;var m=(e&&e.message)||String(e);
+    if(/Failed to fetch|NetworkError|Load failed/i.test(m))m="اینترنت گوشی قطع است.";$("err").textContent=m}
+}
+$("go").onclick=doLogin;
+$("p").addEventListener("keydown",function(e){if(e.key==="Enter")doLogin()});
+
+if("serviceWorker" in navigator&&/^https?:$/.test(location.protocol)){navigator.serviceWorker.register("sw.js").catch(function(){})}
+var sv=getSaved();
+if(sv&&sv.u&&sv.p){cred=sv;showApp()}else showLogin("");
+})();
+</script>
+</body>
+</html>
